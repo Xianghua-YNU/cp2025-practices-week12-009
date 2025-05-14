@@ -208,5 +208,5 @@ if __name__ == "__main__":
     print(f"拟合得到的a1参数: a1 = {a1:.2f} ± {a1_err:.2f}")
     
     # 绘制包含减速参数的哈勃图
-    fig = plot_hubble_diagram_with_deceleration(z, mu, mu_err, H0, q0)
+    fig = plot_hubble_diagram_with_deceleration(z, mu, mu_err, H0,a1)
     plt.show()
