@@ -49,7 +49,7 @@ def hubble_model(z, H0):
     return 5 * np.log10(d_L) + 25
 
 
-def hubble_model_with_deceleration(z, H0, q0):
+def hubble_model_with_deceleration(z, H0, a1 ):
     """
     包含减速参数的哈勃模型
     
@@ -67,7 +67,7 @@ def hubble_model_with_deceleration(z, H0, q0):
     #return mu
 
     c = 3e5  # 光速，单位：km/s
-    d_L = (c / H0) * (z + (1 - q0)/2 * z**2)  # 物理公式修正
+    d_L = (c / H0) * (z + (1 -  a1 )/2 * z**2)  # 物理公式修正
     d_L = np.clip(d_L, 1e-10, None)  # 确保非负
     mu = 5 * np.log10(d_L) + 25
     return mu    
@@ -120,10 +120,10 @@ def hubble_fit_with_deceleration(z, mu, mu_err):
     #return H0, H0_err, a1, a1_err
     popt, pcov = curve_fit(hubble_model_with_deceleration, z, mu, sigma=mu_err, p0=[70, -0.5])
     H0 = popt[0]
-    q0 = popt[1]
+    a1 = popt[1]
     H0_err = np.sqrt(pcov[0, 0])
-    q0_err = np.sqrt(pcov[1, 1])
-    return H0, H0_err, q0, q0_err
+    a1_err = np.sqrt(pcov[1, 1])
+    return H0, H0_err, a1, a1_err
 
 def plot_hubble_diagram(z, mu, mu_err, H0):
     """
@@ -155,7 +155,7 @@ def plot_hubble_diagram(z, mu, mu_err, H0):
     return plt.gcf()
 
 
-def plot_hubble_diagram_with_deceleration(z, mu, mu_err, H0, q0):
+def plot_hubble_diagram_with_deceleration(z, mu, mu_err, H0, a1):
     """
     绘制包含减速参数的哈勃图
     
