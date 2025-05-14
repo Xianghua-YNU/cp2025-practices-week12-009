@@ -17,7 +17,7 @@ def breit_wigner(E, Er, Gamma, fr):
     """
     # TODO: 在此实现Breit-Wigner公式 (约1行代码)
     # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
+    
 
 def fit_without_errors(energy, cross_section):
     """
@@ -39,8 +39,7 @@ def fit_without_errors(energy, cross_section):
     
     # TODO: 使用curve_fit进行拟合 (约1行代码)
     # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
-
+    
 def fit_with_errors(energy, cross_section, errors):
     """
     考虑误差的Breit-Wigner拟合
