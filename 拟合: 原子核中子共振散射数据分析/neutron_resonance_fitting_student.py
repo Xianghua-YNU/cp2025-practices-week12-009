@@ -17,7 +17,8 @@ def breit_wigner(E, Er, Gamma, fr):
     """
     # TODO: 在此实现Breit-Wigner公式 (约1行代码)
     # [STUDENT_CODE_HERE]
-    
+    return fr / ((E - Er)**2 + Gamma**2 / 4)
+
 
 def fit_without_errors(energy, cross_section):
     """
@@ -39,7 +40,10 @@ def fit_without_errors(energy, cross_section):
     
     # TODO: 使用curve_fit进行拟合 (约1行代码)
     # [STUDENT_CODE_HERE]
+    popt, pcov = curve_fit(breit_wigner, energy, cross_section, 
+                          p0=[Er_guess, Gamma_guess, fr_guess])
     
+    return popt, pcov
 def fit_with_errors(energy, cross_section, errors):
     """
     考虑误差的Breit-Wigner拟合
