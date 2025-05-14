@@ -24,9 +24,19 @@ def lagrange_interpolation(x, x_data, y_data):
         2. 考虑使用双重循环结构
         3. 注意处理分母为零的情况
     """
-    # TODO: 在此实现拉格朗日插值算法 (大约10-15行代码)
-    # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
+    n = len(x_data)
+    result = np.zeros_like(x)
+    
+    for i in range(n):
+        term = np.ones_like(x)
+        for j in range(n):
+            if i != j:
+                denominator = x_data[i] - x_data[j]
+                if denominator == 0:
+                    continue
+                term *= (x - x_data[j]) / denominator
+        result += y_data[i] * term
+   
     return result
 
 def cubic_spline_interpolation(x, x_data, y_data):
@@ -46,10 +56,8 @@ def cubic_spline_interpolation(x, x_data, y_data):
         2. 设置kind='cubic'
         3. 考虑边界条件处理
     """
-    # TODO: 在此实现三次样条插值 (大约2-3行代码)
-    # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
-    return result
+    f = interp1d(x_data, y_data, kind='cubic', fill_value='extrapolate')
+    return f(x)
 
 def find_peak(x, y):
     """
@@ -67,9 +75,25 @@ def find_peak(x, y):
         2. 计算半高位置
         3. 使用np.argmin找到半高位置
     """
-    # TODO: 在此实现共振峰分析 (大约5-8行代码)
-    # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
+    # 找到峰值位置
+    peak_idx = np.argmax(y)
+    peak_x = x[peak_idx]
+    peak_y = y[peak_idx]
+    
+    # 计算半高
+    half_max = peak_y / 2
+    
+    # 找到左边半高点
+    left_idx = np.argmin(np.abs(y[:peak_idx] - half_max))
+    left_x = x[left_idx]
+    
+    # 找到右边半高点
+    right_idx = peak_idx + np.argmin(np.abs(y[peak_idx:] - half_max))
+    right_x = x[right_idx]
+    
+    # 计算FWHM
+    fwhm = right_x - left_x
+    
     return peak_x, fwhm
 
 def plot_results():
