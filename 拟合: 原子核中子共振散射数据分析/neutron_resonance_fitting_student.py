@@ -65,7 +65,11 @@ def fit_with_errors(energy, cross_section, errors):
     
     # TODO: 使用curve_fit进行拟合，考虑误差 (约1行代码)
     # [STUDENT_CODE_HERE]
-    raise NotImplementedError("请在 {} 中实现此函数".format(__file__))
+    popt, pcov = curve_fit(breit_wigner, energy, cross_section, 
+                          p0=[Er_guess, Gamma_guess, fr_guess],
+                          sigma=errors, absolute_sigma=True)
+    
+    return popt, pcov
 
 def plot_fit_results(energy, cross_section, errors, popt, pcov, title):
     """
