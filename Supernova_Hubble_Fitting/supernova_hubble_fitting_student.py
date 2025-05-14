@@ -65,11 +65,13 @@ def hubble_model_with_deceleration(z, H0, a1):
     #[STUDENT_CODE_HERE]
     #raise NotImplementedError("请在 {} 中实现此函数。".format(__file__))
     #return mu
+
     c = 3e5  # 光速，单位：km/s
-    denominator = H0 * (1 + (1 + a1) * z)
-    if np.any(denominator <= 0):
-        raise ValueError("计算距离模数时遇到非正值")
-    return 5 * np.log10(c * z / denominator) + 25
+    d_L = (c / H0) * (z + (1 + q0)/2 * z**2)  # 物理公式修正
+    d_L = np.clip(d_L, 1e-10, None)  # 确保非负
+    mu = 5 * np.log10(d_L) + 25
+    return mu    
+   
 
 
 def hubble_fit(z, mu, mu_err):
