@@ -67,7 +67,7 @@ def hubble_model_with_deceleration(z, H0, q0):
     #return mu
 
     c = 3e5  # 光速，单位：km/s
-    d_L = (c / H0) * (z + (1 + q0)/2 * z**2)  # 物理公式修正
+    d_L = (c / H0) * (z + (1 - q0)/2 * z**2)  # 物理公式修正
     d_L = np.clip(d_L, 1e-10, None)  # 确保非负
     mu = 5 * np.log10(d_L) + 25
     return mu    
