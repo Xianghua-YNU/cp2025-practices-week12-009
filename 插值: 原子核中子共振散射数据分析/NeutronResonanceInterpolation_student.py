@@ -25,10 +25,18 @@ def lagrange_interpolation(x, x_data, y_data):
         3. 注意处理分母为零的情况
     """
     n = len(x_data)
-    result = np.zeros_like(x)
+    # 确保结果是浮点类型
+    if isinstance(x, (int, float)):
+        result = 0.0
+    else:
+        result = np.zeros_like(x, dtype=float)
     
     for i in range(n):
-        term = np.ones_like(x)
+        if isinstance(x, (int, float)):
+            term = 1.0
+        else:
+            term = np.ones_like(x, dtype=float)
+            
         for j in range(n):
             if i != j:
                 denominator = x_data[i] - x_data[j]
@@ -36,7 +44,7 @@ def lagrange_interpolation(x, x_data, y_data):
                     continue
                 term *= (x - x_data[j]) / denominator
         result += y_data[i] * term
-   
+    
     return result
 
 def cubic_spline_interpolation(x, x_data, y_data):
